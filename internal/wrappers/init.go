@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	scm "github.com/kacpekwasny/payments-react/pkg/sql_conn_manager"
+	scm "github.com/kacpekwasny/payments-backend/pkg/sql_conn_manager"
 )
 
 var (

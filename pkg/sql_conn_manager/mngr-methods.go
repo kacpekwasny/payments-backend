@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kacpekwasny/payments-react/internal/funcs"
+	"github.com/kacpekwasny/payments-backend/internal/funcs"
 )
 
 func InitMngr(m map[string]string) *Mngr {

@@ -6,9 +6,9 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	f "github.com/kacpekwasny/payments-react/internal/funcs"
-	jstr "github.com/kacpekwasny/payments-react/internal/json_structs"
-	scm "github.com/kacpekwasny/payments-react/pkg/sql_conn_manager"
+	f "github.com/kacpekwasny/payments-backend/internal/funcs"
+	jstr "github.com/kacpekwasny/payments-backend/internal/json_structs"
+	scm "github.com/kacpekwasny/payments-backend/pkg/sql_conn_manager"
 )
 
 func getRoomData(w http.ResponseWriter, r *http.Request) {

@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/kacpekwasny/payments-react/internal/router"
-	"github.com/kacpekwasny/payments-react/internal/wrappers"
-	scm "github.com/kacpekwasny/payments-react/pkg/sql_conn_manager"
+	"github.com/kacpekwasny/payments-backend/internal/router"
+	"github.com/kacpekwasny/payments-backend/internal/wrappers"
+	scm "github.com/kacpekwasny/payments-backend/pkg/sql_conn_manager"
 )
 
 func SetRoutes(rtr *mux.Router) {

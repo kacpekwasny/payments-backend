@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/kacpekwasny/payments-react/internal/funcs"
+	"github.com/kacpekwasny/payments-backend/internal/funcs"
 )
 
 func LogRequests(handler func(w http.ResponseWriter, r *http.Request)) func(w http.ResponseWriter, r *http.Request) {

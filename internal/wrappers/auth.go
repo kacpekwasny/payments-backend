@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/kacpekwasny/payments-react/internal/funcs"
-	scm "github.com/kacpekwasny/payments-react/pkg/sql_conn_manager"
+	"github.com/kacpekwasny/payments-backend/internal/funcs"
+	scm "github.com/kacpekwasny/payments-backend/pkg/sql_conn_manager"
 )
 
 func UserIsAuthenticated(next http.Handler) http.Handler {
