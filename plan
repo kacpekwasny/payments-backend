@@ -1,0 +1,105 @@
+
+To do:
+    SQL connetion manager
+    
+
+
+
+
+
+
+
+Endpoints:
+
+
+AuthorizedToRoom?:
+    cookie:
+        login, token
+    .then:
+        /isAuthenticated/login
+        if ok:
+        if login in room:
+
+
+/?roomid=a9jmp0blkjqgdokfhze19u6ukolfug6 -> roomid
+
+### UPDATE 
+/update/accept-payment/{room_id}/{payment_id}
+    AuthorizedToRoom?
+        SQL.payment.waiting.remove(login)
+        SQL.payment.accpeted.add(login)
+
+/update/unaccept-payment/{room_id}/{payment_id}
+    AuthorizedToRoom?
+        SQL.payment.accepted.remove(login)
+        SQL.payment.waiting.add(login)
+
+/update/change-user-role/{room_id}/{username}/{new_role}
+    AuthorisedToRoom?
+
+
+### GET 
+/get/room-data/{room_id}
+    AuthorizedToRoom?
+        return (
+            SQL.room.user.saldo
+            SQL.room.name
+            )
+
+/get/room-payments/{room_id}
+    AuthorizedToRoom?
+        return (
+            SQL.room.pending_payments
+            SQL.room.history_payments
+        )
+
+
+### POST 
+/post/new-payment/{roomid}/
+    AuthorizedToRoom?
+        return (
+            status {
+                0: ok
+                1: internal error
+                2: invalid input
+            }
+        )
+
+/post/add-user-room/{room_id}/{username}
+    AuthorizedToRoom?
+        return (
+            status {
+                0: ok
+                1: internal error
+                2: username not found
+                3: unauthorised to action
+            }
+        )
+
+/post/remove-user-room/{room_id}/{username}
+    AuthorizedToRoom?
+        return (
+            status {
+                0: ok
+                1: internal error
+                2: username not found
+                3: unauthorised to action
+            }
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
