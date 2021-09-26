@@ -1,0 +1,9 @@
+{
+    "listen address": ":8082",
+    "listen address api": ":8083",
+    "username": "db_username",
+    "password": "db_password",
+    "address": "10.0.0.1",
+    "databaseName": "payments",
+    "authApiBaseUrl": "http://localhost:8081"
+}

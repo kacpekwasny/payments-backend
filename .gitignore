@@ -1,2 +1,2 @@
 *.exe
-*conf.json
+cmd/main/conf.json
