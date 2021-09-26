@@ -1,0 +1,9 @@
+{
+    "listen address": ":8082",
+    "listen address api": ":8083",
+    "username": "kacperVPN",
+    "password": "JtBHj#3ntwJ",
+    "address": "10.8.0.1",
+    "databaseName": "payments",
+    "authApiBaseUrl": "http://localhost:8081"
+}

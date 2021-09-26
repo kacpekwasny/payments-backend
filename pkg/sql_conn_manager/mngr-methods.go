@@ -19,8 +19,18 @@ func InitMngr(m map[string]string) *Mngr {
 			port:         3306,
 		},
 		connectionLive: false,
-		stmtChan:       make(chan InStmt),
-		Lock:           &sync.Mutex{},
+		stmtChan:       make(chan InStmt, 1),
+
+		dbMtx:             &sync.Mutex{},
+		watchQueriesOnMtx: &sync.Mutex{},
+		pingOnMtx:         &sync.Mutex{},
+		pingTimeout:       time.Second * 2,
+		pingInterval:      time.Second * 5,
+
+		pingOn:         false,
+		watchQueriesOn: false,
+
+		LOG_LEVEL: 3,
 	}
 	return mngr
 }
@@ -33,7 +43,9 @@ func (m *Mngr) Connect() error {
 	if err != nil {
 		return err
 	}
+	m.dbMtx.Lock()
 	m.db = db
+	m.dbMtx.Unlock()
 	return nil
 }
 
@@ -108,20 +120,21 @@ func (m *Mngr) WatchQueries(turnOn bool) {
 	if turnOn && !m.watchQueriesOn {
 		go func() {
 			for {
-
 				select {
 				case st := <-m.stmtChan:
-					qret := QueryRet{}
-					switch st.ActionType {
-					case 0:
-						qret.Result, qret.Err = m.db.Exec(st.SqlText, st.StmtArgs...)
-					case 1:
-						qret.Rows, qret.Err = m.db.Query(st.SqlText, st.StmtArgs...)
-					case 2:
-						qret.Row = m.db.QueryRow(st.SqlText, st.StmtArgs...)
-					}
-					st.ResChan <- qret
-					close(st.ResChan)
+					go func() {
+						qret := QueryRet{}
+						switch st.ActionType {
+						case 0:
+							qret.Result, qret.Err = m.db.Exec(st.SqlText, st.StmtArgs...)
+						case 1:
+							qret.Rows, qret.Err = m.db.Query(st.SqlText, st.StmtArgs...)
+						case 2:
+							qret.Row = m.db.QueryRow(st.SqlText, st.StmtArgs...)
+						}
+						st.ResChan <- qret
+						close(st.ResChan)
+					}()
 				case <-time.After(time.Millisecond * 100):
 					// So when the m.watchQueriesOn changes select wont be stuck waiting
 					// for stmtChan
@@ -132,6 +145,7 @@ func (m *Mngr) WatchQueries(turnOn bool) {
 					m.watchQueriesOnMtx.Unlock()
 					return
 				}
+				m.watchQueriesOnMtx.Unlock()
 			}
 		}()
 	}

@@ -1,4 +1,4 @@
-package router
+package api_router
 
 import (
 	"github.com/gorilla/mux"

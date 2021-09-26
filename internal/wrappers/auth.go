@@ -1,6 +1,7 @@
 package wrappers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -8,7 +9,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/kacpekwasny/payments-backend/internal/funcs"
-	scm "github.com/kacpekwasny/payments-backend/pkg/sql_conn_manager"
 )
 
 func UserIsAuthenticated(next http.Handler) http.Handler {
@@ -25,22 +25,33 @@ func UserIsAuthenticated(next http.Handler) http.Handler {
 		}
 
 		// input is safe
-		resp, err := client.Get(config.AuthApiBaseUrl + fmt.Sprintf("/%s/%s", uname, token))
+		resp, err := client.Get(Config.AuthApiBaseUrl + fmt.Sprintf("/isAuthenticated/%s/%s", uname, token))
 		if err != nil {
-			fmt.Println(err)
-			fmt.Fprint(w, "Internal fail")
+			funcs.RIE(w)
+			fmt.Println("client.Get error:", err)
+			return
 		}
 
 		b, err := io.ReadAll(resp.Body)
+		if err != nil {
+			funcs.RIE(w)
+			fmt.Println("io.ReadAll error:", err)
+			return
+		}
 		m := map[string]int{}
-		json.Unmarshal(b, &m)
-
-		if m["err_code"] == 0 {
-			next.ServeHTTP(w, r)
+		err = json.Unmarshal(b, &m)
+		if err != nil {
+			funcs.RIE(w)
+			fmt.Println("json.Unmarshal error:", err)
+			return
 		}
 
-		// Unauth
-		fmt.Fprint(w, "unauth")
+		if m["err_code"] != 0 {
+			// Unauth
+			funcs.Respond(w, "unauth")
+			return
+		}
+		next.ServeHTTP(w, r)
 	})
 }
 
@@ -50,42 +61,76 @@ func AuthorisedForRoom(next http.Handler) http.Handler {
 		// Get username
 		params := mux.Vars(r)
 		uname := params["username"]
-		roomId := params["room_id"]
+		roomLink := params["room_link"]
+		fmt.Println(uname, roomLink)
 
-		resChan := make(chan scm.QueryRet)
-		defer close(resChan)
-		Ctm.StmtChan <- scm.InStmt{
-			SqlText:    "CALL AuthorisedForRoom(?, ?)",
-			StmtArgs:   []interface{}{uname, roomId},
-			ActionType: 2,
-			ResChan:    resChan,
-		}
+		row, err := Ctm.QueryRow("CALL AuthorisedForRoom(?, ?)",
+			[]interface{}{roomLink, uname})
 
-		queryRet := <-resChan
-		if queryRet.Err != nil {
-			fmt.Fprint(w, "Internal error")
+		if err != nil {
+			funcs.RIE(w)
 			return
 		}
 		found := 0
-		err := queryRet.Row.Scan(&found)
+		err = row.Scan(&found)
 		if err != nil {
 			fmt.Println("AuthorisedForRooom, Row.Scan, err:", err)
-			fmt.Fprint(w, "Internal error")
+			funcs.RIE(w)
 			return
 		}
 		if found != 1 {
-			fmt.Fprint(w, "Unauthorised for room")
+			funcs.Respond(w, "unauth")
 			return
 		}
 
 		// User is authorised for this room
+		fmt.Printf("User '%s' authorised for room of link '%s' \n", uname, roomLink)
+		next.ServeHTTP(w, r)
+	})
+}
+
+func UserIsAdminForRoom(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		params := mux.Vars(r)
+		uname := params["username"]
+		roomLink := params["room_link"]
+
+		row, err := Ctm.QueryRow(`SELECT is_admin
+			FROM payments.rooms_have_users
+			WHERE rooms_link=? AND users_id=(SELECT id FROM users WHERE username=?)`,
+			[]interface{}{roomLink, uname})
+
+		if err != nil {
+			funcs.RIE(w)
+			fmt.Println(err)
+			if err != sql.ErrNoRows {
+				panic(err)
+			}
+			return
+		}
+		isAdmin := false
+		row.Scan(&isAdmin)
+		if !isAdmin {
+			fmt.Println("non Admin tried accessing admin func")
+			funcs.Respond(w, "not_admin")
+			return
+		}
+
 		next.ServeHTTP(w, r)
 	})
 }
 
 // User is authenticated and authorised
 func AA(next http.Handler) http.Handler {
+	fmt.Println("AA wrapper is disabled for development")
+	return next
+	//return UserIsAuthenticated(
+	//	AuthorisedForRoom(
+	//		next))
+}
+
+func AAU(next http.Handler) http.Handler {
 	return UserIsAuthenticated(
 		AuthorisedForRoom(
-			next))
+			UserIsAdminForRoom(next)))
 }

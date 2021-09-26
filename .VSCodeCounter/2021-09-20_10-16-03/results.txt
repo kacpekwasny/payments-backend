@@ -1,0 +1,63 @@
+Date : 2021-09-20 10:16:03
+Directory : z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend
+Total : 27 files,  1223 codes, 106 comments, 227 blanks, all 1556 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Go       |         24 |      1,208 |        106 |        223 |      1,537 |
+| JSON     |          1 |          8 |          0 |          0 |          8 |
+| XML      |          1 |          7 |          0 |          3 |         10 |
+| Markdown |          1 |          0 |          0 |          1 |          1 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                  | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                     |         27 |      1,223 |        106 |        227 |      1,556 |
+| cmd                                                                                                   |          4 |         85 |          8 |         20 |        113 |
+| cmd\main                                                                                              |          4 |         85 |          8 |         20 |        113 |
+| internal                                                                                              |         18 |        894 |         74 |        168 |      1,136 |
+| internal\funcs                                                                                        |          5 |        239 |         25 |         41 |        305 |
+| internal\json_structs                                                                                 |          2 |         55 |          9 |         18 |         82 |
+| internal\router                                                                                       |          8 |        459 |         29 |         83 |        571 |
+| internal\wrappers                                                                                     |          3 |        141 |         11 |         26 |        178 |
+| pkg                                                                                                   |          3 |        237 |         24 |         35 |        296 |
+| pkg\sql_conn_manager                                                                                  |          3 |        237 |         24 |         35 |        296 |
++-------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                              | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\README.md                              | Markdown |          0 |          0 |          1 |          1 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\cmd\main\conf.json                     | JSON     |          8 |          0 |          0 |          8 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\cmd\main\init.go                       | Go       |         29 |          1 |          6 |         36 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\cmd\main\main.go                       | Go       |         21 |          2 |          7 |         30 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\cmd\main\set-routes.go                 | Go       |         27 |          5 |          7 |         39 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\go.mod                                 | XML      |          7 |          0 |          3 |         10 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\funcs\check-user-input.go     | Go       |         12 |          0 |          4 |         16 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\funcs\convert.go              | Go       |        135 |          9 |         17 |        161 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\funcs\cookie.go               | Go       |         31 |          0 |          6 |         37 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\funcs\log.go                  | Go       |         15 |          0 |          4 |         19 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\funcs\respond.go              | Go       |         46 |         16 |         10 |         72 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\json_structs\payments_room.go | Go       |         28 |          5 |          9 |         42 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\json_structs\validate.go      | Go       |         27 |          4 |          9 |         40 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\router\init.go                | Go       |         10 |          0 |          4 |         14 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\router\router.go              | Go       |         12 |          4 |          5 |         21 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\router\routes-get.go          | Go       |         53 |          2 |         13 |         68 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\router\routes-post.go         | Go       |         85 |          2 |         12 |         99 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\router\routes-update.go       | Go       |        176 |         13 |         24 |        213 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\router\sql-get.go             | Go       |         88 |          1 |         16 |        105 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\router\sql-post.go            | Go       |         34 |          7 |          8 |         49 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\router\sql-update.go          | Go       |          1 |          0 |          1 |          2 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\wrappers\LogRequests.go       | Go       |         11 |          0 |          3 |         14 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\wrappers\auth.go              | Go       |        108 |         11 |         18 |        137 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\internal\wrappers\init.go              | Go       |         22 |          0 |          5 |         27 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\pkg\sql_conn_manager\methods.go        | Go       |         40 |         11 |          6 |         57 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\pkg\sql_conn_manager\mngr-methods.go   | Go       |        147 |          9 |         16 |        172 |
+| z:\Home\IT\Code\go\src\github.com\kacpekwasny\payments-backend\pkg\sql_conn_manager\struct.go         | Go       |         50 |          4 |         13 |         67 |
+| Total                                                                                                 |          |      1,223 |        106 |        227 |      1,556 |
++-------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

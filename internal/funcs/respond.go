@@ -20,12 +20,13 @@ import (
 //  invalid_chars
 //  unauth
 //  room_link_not_found
-//  no_rows  */
+//  no_rows
+//  incorrect_input */
 func Respond(w http.ResponseWriter, msg_title string, key_val ...interface{}) {
 
 	ln := len(key_val)
 	if ln%2 != 0 {
-		panic("len of key_val has to be event")
+		panic("len of key_val has to be even")
 	}
 
 	err_code := GetErrCode(msg_title)
@@ -42,16 +43,12 @@ func Respond(w http.ResponseWriter, msg_title string, key_val ...interface{}) {
 var ErrCodes = map[string]int{
 	"ok":                  0,
 	"internal_error":      1,
-	"login_not_found":     2,
-	"pass_missmatch":      3,
-	"login_in_use":        5,
-	"login_requirements":  6,
-	"pass_requirements":   7,
-	"paswd_pwned":         8,
 	"invalid_chars":       9,
 	"unauth":              10,
 	"room_link_not_found": 11,
 	"no_rows":             13,
+	"incorrect_input":     14,
+	"not_admin":           15,
 }
 
 func GetErrCode(message_title string) int {
@@ -66,4 +63,9 @@ func GetErrCode(message_title string) int {
 // RIE(w) == Respond(w, "internal_error")
 func RIE(w http.ResponseWriter) {
 	Respond(w, "internal_error")
+}
+
+// ROK(w) == Respond(w, "ok")
+func ROK(w http.ResponseWriter) {
+	Respond(w, "ok")
 }

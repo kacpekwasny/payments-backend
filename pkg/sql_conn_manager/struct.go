@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"sync"
 	"time"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type SQLConnConf struct {
@@ -17,9 +19,9 @@ type SQLConnConf struct {
 
 type Mngr struct {
 	conf SQLConnConf
-	Lock *sync.Mutex
 
 	db                *sql.DB
+	dbMtx             *sync.Mutex
 	watchQueriesOn    bool
 	watchQueriesOnMtx *sync.Mutex
 
@@ -56,3 +58,9 @@ type ChansToMngr struct {
 	StmtChan chan InStmt
 	Lock     *sync.Mutex
 }
+
+const (
+	EXEC     = 0
+	QUERY    = 1
+	QUERYROW = 2
+)

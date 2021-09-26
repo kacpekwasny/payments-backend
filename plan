@@ -21,7 +21,7 @@ AuthorizedToRoom?:
         if login in room:
 
 
-/?roomid=a9jmp0blkjqgdokfhze19u6ukolfug6 -> roomid
+/?roomLink=a9jmp0blkjqgdokfhze19u6ukolfug6 -> roomLink
 
 ### UPDATE 
 /update/accept-payment/{room_id}/{payment_id}
@@ -87,16 +87,15 @@ AuthorizedToRoom?:
             }
         )
 
+Enhance database for faster queries with better planned columns and indexes
+
+Last login in room, delete room that no one used in 6 months unless they are signed as pernament
+
+Get /get/new-room -> http 301 -> /main?roomLink=LINK_OF_NEW_ROOM
 
 
-
-
-
-
-
-
-
-
+- get room data returns list of users in room
+- list of rooms
 
 
 
