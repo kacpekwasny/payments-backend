@@ -13,7 +13,7 @@ var CONFIG_MAP = LoadConfig()
 
 func LoadConfig() map[string]string {
 	var conf = map[string]string{}
-	f, err := os.Open("conf.json")
+	f, err := os.Open(os.Args[1])
 	cmt.Pc(err)
 	defer f.Close()
 	bytes, err := ioutil.ReadAll(f)
