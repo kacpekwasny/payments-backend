@@ -34,15 +34,15 @@ func main() {
 		defer wg.Done()
 		listen := CONFIG_MAP["listen address"]
 		fmt.Printf("ListenAndServe... on %#v\n", listen)
-		http.ListenAndServe(listen, wrpr)
-		fmt.Println("end ListenAndServe")
+		err := http.ListenAndServe(listen, wrpr)
+		fmt.Println("end ListenAndServe err:", err)
 	}()
 	go func() {
 		defer wg.Done()
 		apiListen := CONFIG_MAP["listen address api"]
 		fmt.Printf("ListenAndServe API... on %#v\n", apiListen)
-		http.ListenAndServe(apiListen, apiwrpr)
-		fmt.Println("end ListenAndServe API")
+		err := http.ListenAndServe(apiListen, apiwrpr)
+		fmt.Println("end ListenAndServe API err:", err)
 	}()
 	wg.Wait()
 }
