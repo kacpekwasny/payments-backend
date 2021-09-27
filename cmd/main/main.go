@@ -33,16 +33,16 @@ func main() {
 	go func() {
 		defer wg.Done()
 		listen := CONFIG_MAP["listen address"]
-		fmt.Printf("ListenAndServe... on %#v\n", listen)
+		fmt.Printf("ListenAndServe external... on %#v\n", listen)
 		err := http.ListenAndServe(listen, wrpr)
-		fmt.Println("end ListenAndServe err:", err)
+		fmt.Println("end ListenAndServe external err:", err)
 	}()
 	go func() {
 		defer wg.Done()
 		apiListen := CONFIG_MAP["listen address api"]
-		fmt.Printf("ListenAndServe API... on %#v\n", apiListen)
+		fmt.Printf("ListenAndServe internal API... on %#v\n", apiListen)
 		err := http.ListenAndServe(apiListen, apiwrpr)
-		fmt.Println("end ListenAndServe API err:", err)
+		fmt.Println("end ListenAndServe internal API err:", err)
 	}()
 	wg.Wait()
 }

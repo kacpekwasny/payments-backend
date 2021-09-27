@@ -23,4 +23,5 @@ var (
 type configStruct struct {
 	AuthApiBaseUrl string
 	Lock           *sync.Mutex
+	AuthON         bool
 }

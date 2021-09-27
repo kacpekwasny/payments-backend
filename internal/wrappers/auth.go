@@ -122,11 +122,14 @@ func UserIsAdminForRoom(next http.Handler) http.Handler {
 
 // User is authenticated and authorised
 func AA(next http.Handler) http.Handler {
+	if Config.AuthON {
+		return UserIsAuthenticated(
+			AuthorisedForRoom(
+				next))
+
+	}
 	fmt.Println("AA wrapper is disabled for development")
 	return next
-	//return UserIsAuthenticated(
-	//	AuthorisedForRoom(
-	//		next))
 }
 
 func AAU(next http.Handler) http.Handler {

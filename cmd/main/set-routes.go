@@ -1,7 +1,10 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/gorilla/mux"
+	cmt "github.com/kacpekwasny/commontools"
 	apir "github.com/kacpekwasny/payments-backend/internal/api_router"
 	"github.com/kacpekwasny/payments-backend/internal/router"
 	"github.com/kacpekwasny/payments-backend/internal/wrappers"
@@ -44,5 +47,10 @@ func connectWrappersRouterCtm(m *scm.Mngr) {
 func configWrappers(confMap map[string]string) {
 	wrappers.Config.Lock.Lock()
 	wrappers.Config.AuthApiBaseUrl = confMap["authApiBaseUrl"]
+	ON, err := strconv.ParseBool(confMap["authON"])
+	if err != nil {
+		cmt.Pc(err)
+	}
+	wrappers.Config.AuthON = ON
 	wrappers.Config.Lock.Unlock()
 }
