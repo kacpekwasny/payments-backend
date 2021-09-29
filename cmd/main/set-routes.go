@@ -15,7 +15,7 @@ func SetRoutes(rtr *mux.Router) {
 	const rut = "{room_link}/{username}/{token}"
 	// get-routes
 	rtr.Handle("/get/room-data/"+rut, wrappers.AA(router.GetRoomData)).Methods("GET")
-	rtr.Handle("/get/my-rooms/{username}/{token}", wrappers.AA(router.GetMyRooms)).Methods("GET")
+	rtr.Handle("/get/my-rooms/{username}/{token}", wrappers.UserIsAuthenticated(router.GetMyRooms)).Methods("GET")
 
 	// post-routes
 	// rtr.Handle("/post/new-room/{username}/{token}", wrappers.UserIsAuthenticated(router.PostNewRoom)).Methods("POST")
