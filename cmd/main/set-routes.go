@@ -19,7 +19,7 @@ func SetRoutes(rtr *mux.Router) {
 
 	// post-routes
 	// rtr.Handle("/post/new-room/{username}/{token}", wrappers.UserIsAuthenticated(router.PostNewRoom)).Methods("POST")
-	rtr.Handle("/post/new-room/{username}/{token}", wrappers.AA(router.PostNewRoom)).Methods("POST") // <- temporary
+	rtr.Handle("/post/new-room/{username}/{token}", wrappers.UserIsAuthenticated(router.PostNewRoom)).Methods("POST") // <- temporary
 	rtr.Handle("/post/new-payment/"+rut, wrappers.AA(router.PostNewPayment)).Methods("POST")
 	rtr.Handle("/post/add-user-room/"+rut+"/{new_user}", wrappers.AA(router.PostAddUserRoom)).Methods("POST")
 	rtr.Handle("/post/remove-user-room/"+rut+"/{old_user}", wrappers.AA(router.PostRemoveUserRoom)).Methods("POST")

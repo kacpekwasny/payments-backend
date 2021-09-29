@@ -46,14 +46,14 @@ func UserIsAuthenticated(next http.Handler) http.Handler {
 			return
 		}
 
-		errCode := m["err_code"]
-		fmt.Printf("errCode = %#v, errCode == 0 = %#v", errCode, errCode == 0)
 		// authorised
-		if errCode == 0 {
+		if m["err_code"] == 0 {
+			fmt.Printf("AUTH OK for %v\n", uname)
 			next.ServeHTTP(w, r)
 			return
 		}
 		// Unauth
+		fmt.Printf("AUTH NOT OK for %v\n", uname)
 		funcs.Respond(w, "unauth")
 	})
 }
