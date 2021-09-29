@@ -46,6 +46,7 @@ func UserIsAuthenticated(next http.Handler) http.Handler {
 			return
 		}
 
+		fmt.Println(m)
 		if m["err_code"] != 0 {
 			// Unauth
 			funcs.Respond(w, "unauth")
