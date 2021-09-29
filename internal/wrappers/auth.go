@@ -54,7 +54,7 @@ func UserIsAuthenticated(next http.Handler) http.Handler {
 		}
 		// Unauth
 		fmt.Printf("AUTH NOT OK for %v\n", uname)
-		funcs.Respond(w, "unauth")
+		funcs.Respond(w, "unauthenticated")
 	})
 }
 
@@ -81,14 +81,13 @@ func AuthorisedForRoom(next http.Handler) http.Handler {
 			funcs.RIE(w)
 			return
 		}
-		if found != 1 {
-			funcs.Respond(w, "unauth")
+		if found > 0 {
+			// User is authorised for this room
+			fmt.Printf("AUTHZ OK for '%s' for room '%s' \n", uname, roomLink)
+			next.ServeHTTP(w, r)
 			return
 		}
-
-		// User is authorised for this room
-		fmt.Printf("User '%s' authorised for room of link '%s' \n", uname, roomLink)
-		next.ServeHTTP(w, r)
+		funcs.Respond(w, "unauthorized")
 	})
 }
 
