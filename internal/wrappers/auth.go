@@ -25,7 +25,7 @@ func UserIsAuthenticated(next http.Handler) http.Handler {
 		}
 
 		// input is safe
-		resp, err := client.Get(Config.AuthApiBaseUrl + fmt.Sprintf("/isAuthenticated/%s/%s", uname, token))
+		resp, err := client.Get(Config.AuthApiBaseUrl + fmt.Sprintf("/prolongAuth/%s/%s", uname, token))
 		if err != nil {
 			funcs.RIE(w)
 			fmt.Println("client.Get error:", err)
