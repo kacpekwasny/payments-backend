@@ -12,11 +12,14 @@ func updateLogin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	oldLogin := params["old_login"]
 	newLogin := params["new_login"]
-	_, err := Ctm.Exec(`
+	fmt.Println("updateLogin()", oldLogin, " -> ", newLogin)
+	res, err := Ctm.Exec(`
 		UPDATE payments.users
 		SET username=?
 		WHERE username=?`,
 		[]interface{}{newLogin, oldLogin})
+	i, errRows := res.RowsAffected()
+	fmt.Println("updateLogin() res.RowsAffected()", i, errRows)
 	if err != nil {
 		fmt.Println("updateLogin: ", err)
 		f.RIE(w)
